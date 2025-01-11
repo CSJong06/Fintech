@@ -1,0 +1,19 @@
+<%- include('partials/header') %>
+
+<section class="container my-4">
+    <section class="jumbotron">
+        <h1 class="display-4">Welcome to FinTech</h1>
+        <p class="lead">Manage your finances with our secure and easy-to-use platform.</p>
+        <hr class="my-4">
+        <% if (!locals.user) { %>
+            <p>Get started by creating an account or logging in.</p>
+            <a class="btn btn-primary btn-lg" href="/register" role="button">Register</a>
+            <a class="btn btn-secondary btn-lg" href="/login" role="button">Login</a>
+        <% } else { %>
+            <p>Welcome back! Check your dashboard to manage your account.</p>
+            <a class="btn btn-primary btn-lg" href="/dashboard" role="button">Go to Dashboard</a>
+        <% } %>
+    </section>
+</section>
+
+<%- include('partials/footer') %>

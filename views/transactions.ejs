@@ -1,0 +1,47 @@
+<%- include('partials/header') %>
+
+<section class="container my-4">
+    <section class="row">
+        <section class="col-12">
+            <section class="card">
+                <section class="card-body">
+                    <h2 class="card-title">Transaction History</h2>
+                    
+                    <section class="btn-group mb-3" role="group">
+                        <button type="button" class="btn btn-outline-primary active" data-filter="all">All</button>
+                        <button type="button" class="btn btn-outline-success" data-filter="deposit">Deposits</button>
+                        <button type="button" class="btn btn-outline-danger" data-filter="withdrawal">Withdrawals</button>
+                    </section>
+
+                    <section class="table-responsive">
+                        <table class="table" id="transactionsTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% console.log(transactionData) %>
+                                <% transactionData.forEach(function(transaction) { %>
+                                <tr data-type="<%= transaction.type %>">
+                                    <td><%= new Date(transaction.createdAt).toLocaleString() %></td>
+                                    <td><%= transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1) %></td>
+                                    <td>$<%= parseFloat(transaction.amount).toFixed(2) %></td>
+                                    <td><%= transaction.description %></td>
+                                </tr>
+                                <% }); %>
+
+                            </tbody>
+                        </table>
+                    </section>
+                </section>
+            </section>
+        </section>
+    </section>
+</section>
+
+<script src="/js/transactions.js"></script>
+<%- include('partials/footer') %>

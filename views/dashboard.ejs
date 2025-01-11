@@ -1,0 +1,87 @@
+<%- include('partials/header') %>
+
+<section class="container my-4">
+    <section class="row g-4">
+        <section class="col-md-6">
+            <section class="card">
+                <section class="card-body">
+                    <h3 class="card-title">Account Balance</h3>
+                    <h2 class="display-4" id="balance">$<%= parseFloat(balanceValue).toFixed(2) %></h2>
+                </section>
+            </section>
+        </section>
+        
+        <section class="col-md-6">
+            <section class="card">
+                <section class="card-body">
+                    <h3 class="card-title">Quick Transaction</h3>
+                    <% if (messages.error) { %>
+                        <section class="alert alert-danger">
+                            <%= messages.error %>
+                        </section>
+                    <% } %>
+                    <form id="transactionForm" action="/api/transaction" method="POST">
+                        <section class="mb-3">
+                            <label class="form-label">Transaction Type</label>
+                            <select name="type" class="form-select" id="transactionType" required>
+                                <option value="deposit">Deposit</option>
+                                <option value="withdraw">Withdraw</option>
+                            </select>
+                        </section>
+                        <section class="mb-3">
+                            <label class="form-label">Amount</label>
+                            <input name="amount"type="number" class="form-control" id="amount" step="0.01" min="0.01" required>
+                        </section>
+                        <section class="mb-3">
+                            <label class="form-label">Description</label>
+                            <input name="description"type="text" class="form-control" id="description" required>
+                        </section>
+                        <button type="submit" class="btn btn-primary">Submit Transaction</button>
+                    </form>
+                </section>
+            </section>
+        </section>
+
+        <section class="col-12">
+            <section class="card">
+                <section class="card-body">
+                    <h3 class="card-title">Recent Transactions</h3>
+                    <section class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentTransactions">
+
+                                   <% transactionData.forEach(function(transaction) { %>
+                                <tr data-type="<%= transaction.type %>">
+                                    <td><%= new Date(transaction.createdAt).toLocaleString() %></td>
+                                    <td><%= transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1) %></td>
+                                    <td>$<%= parseFloat(transaction.amount).toFixed(2) %></td>
+                                    <td><%= transaction.description %></td>
+                                </tr>
+                                <% }); %>
+
+                            </tbody>
+                        </table>
+                    </section>
+                </section>
+            </section>
+        </section>
+    </section>
+</section>
+
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+<script>
+  // You could research the Socket.io and add your implementation here 
+</script>
+
+<script src="../public/js/dashboard.js"></script>
+<%- include('partials/footer') %>
